@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Movie = (props) => {
   const [movie, setMovie] = useState({});
- 
+
   useEffect(() => {
-    const id = 1;
+    const id = props.match.params.id.toString();
     // change ^^^ that line and grab the id from the URL
     // You will NEED to add a dependency array to this effect hook
 
@@ -19,7 +20,7 @@ const Movie = (props) => {
         });
 
   },[]);
-  
+
   // Uncomment this only when you have moved on to the stretch goals
   // const saveMovie = () => {
   //   const addToSavedList = props.addToSavedList;
@@ -43,13 +44,18 @@ const Movie = (props) => {
         </div>
         <h3>Actors</h3>
 
-        {stars.map(star => (
+{/*
+  This needed a "Short circuit evaluation" due to test runing at time befor axios passed all data
+  https://stackoverflow.com/questions/40682064/what-does-operator-indicate-with-this-props-children-react-cloneelemen*/}
+        {stars && stars.map(star => (
           <div key={star} className="movie-star">
             {star}
           </div>
         ))}
       </div>
-      <div className="save-button">Save</div>
+      <Link to="/">
+        <div className="save-button">Save</div>
+      </Link>
     </div>
   );
 }
